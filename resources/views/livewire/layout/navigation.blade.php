@@ -29,33 +29,35 @@ new class extends Component
         <div class="flex-1 overflow-y-auto px-4 py-6">
             <p class="mb-3 px-3 text-[10px] font-semibold uppercase tracking-[.2em] text-slate-400">Workspace</p>
             <div class="space-y-1">
-                <x-sidebar-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" icon="▦">Dashboard</x-sidebar-link>
-                <x-sidebar-link href="{{ route('products.index') }}" :active="request()->routeIs('products.*')" icon="□">Produk</x-sidebar-link>
-                <x-sidebar-link href="{{ route('suppliers.index') }}" :active="request()->routeIs('suppliers.*')" icon="⌁">Supplier</x-sidebar-link>
-                <x-sidebar-link href="{{ route('inventory.index') }}" :active="request()->routeIs('inventory.*')" icon="▤">Persediaan</x-sidebar-link>
-                <x-sidebar-link href="{{ route('stock-transactions.index') }}" :active="request()->routeIs('stock-transactions.*')" icon="↕">Transaksi stok</x-sidebar-link>
-                <x-sidebar-link href="{{ route('reports.index') }}" :active="request()->routeIs('reports.*')" icon="◒">Laporan</x-sidebar-link>
+                <x-sidebar-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" icon="bi-grid">Dashboard</x-sidebar-link>
+                <x-sidebar-link href="{{ route('products.index') }}" :active="request()->routeIs('products.*')" icon="bi-box">Produk</x-sidebar-link>
+                <x-sidebar-link href="{{ route('suppliers.index') }}" :active="request()->routeIs('suppliers.*')" icon="bi-person">Supplier</x-sidebar-link>
+                <x-sidebar-link href="{{ route('inventory.index') }}" :active="request()->routeIs('inventory.*')" icon="bi-inbox">Persediaan</x-sidebar-link>
+                <x-sidebar-link href="{{ route('stock-transactions.index') }}" :active="request()->routeIs('stock-transactions.*')" icon="bi-arrow-up-down">Transaksi stok</x-sidebar-link>
+                <x-sidebar-link href="{{ route('reports.index') }}" :active="request()->routeIs('reports.*')" icon="bi-grid">Laporan</x-sidebar-link>
             </div>
             <p class="mb-3 mt-8 px-3 text-[10px] font-semibold uppercase tracking-[.2em] text-slate-400">Decision support</p>
             <div class="space-y-1">
-                <x-sidebar-link href="{{ route('explainability.index') }}" :active="request()->routeIs('explainability.*')" icon="?">Explainable AI</x-sidebar-link>
-                <x-sidebar-link href="{{ route('forecasts.index') }}" :active="request()->routeIs('forecasts.*')" icon="✦">Forecast AI</x-sidebar-link>
-                <x-sidebar-link href="{{ route('recommendations.index') }}" :active="request()->routeIs('recommendations.*')" icon="↗">Rekomendasi Restock</x-sidebar-link>
+                <x-sidebar-link href="{{ route('explainability.index') }}" :active="request()->routeIs('explainability.*')" icon="bi-question-circle">Explainable AI</x-sidebar-link>
+                <x-sidebar-link href="{{ route('forecasts.index') }}" :active="request()->routeIs('forecasts.*')" icon="bi-bar-chart">Forecast AI</x-sidebar-link>
+                <x-sidebar-link href="{{ route('recommendations.index') }}" :active="request()->routeIs('recommendations.*')" icon="bi-arrow-up-right">Rekomendasi Restock</x-sidebar-link>
             </div>
             @if(auth()->user()->hasRole('admin'))
                 <p class="mb-3 mt-8 px-3 text-[10px] font-semibold uppercase tracking-[.2em] text-slate-400">Administration</p>
-                <x-sidebar-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')" icon="◎">Pengguna</x-sidebar-link>
-                <x-sidebar-link href="{{ route('internal.audit-logs.index') }}" :active="request()->routeIs('internal.audit-logs.*')" icon="≡">Audit log</x-sidebar-link>
+                <x-sidebar-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')" icon="bi-person">Pengguna</x-sidebar-link>
+                <x-sidebar-link href="{{ route('internal.audit-logs.index') }}" :active="request()->routeIs('internal.audit-logs.*')" icon="bi-list-ul">Audit log</x-sidebar-link>
+                <x-sidebar-link href="{{ route('internal.audit-logs.data') }}" :active="request()->routeIs('internal.audit-logs.data')" icon="bi-list-ul">Audit log data</x-sidebar-link>
             @endif
         </div>
         <div class="border-t border-slate-100 p-4">
             <div class="flex items-center gap-3 rounded-xl bg-slate-50 p-3">
                 <div class="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-700">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
                 <div class="min-w-0 flex-1"><p class="truncate text-sm font-semibold text-slate-800">{{ auth()->user()->name }}</p><p class="truncate text-xs text-slate-500">{{ str_replace('_', ' ', ucfirst(auth()->user()->role)) }}</p></div>
-                <x-dropdown align="right" width="48"><x-slot name="trigger"><button class="text-slate-400">•••</button></x-slot><x-slot name="content"><x-dropdown-link :href="route('profile')" wire:navigate>Profil</x-dropdown-link><button wire:click="logout" class="w-full text-start"><x-dropdown-link>Keluar</x-dropdown-link></button></x-slot></x-dropdown>
+                <x-dropdown align="right" width="48"><x-slot name="trigger"><i class="bi bi-three-dots text-slate-400"></i></x-slot><x-slot name="content"><x-dropdown-link :href="route('profile')" wire:navigate>Profil</x-dropdown-link></x-slot></x-dropdown>
+                <button wire:click="logout" class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 transition">Keluar</button>
             </div>
         </div>
     </div>
 </nav>
-<div class="sticky top-0 z-30 flex h-16 items-center border-b border-slate-200 bg-white/90 px-4 backdrop-blur lg:hidden"><button @click="$dispatch('toggle-sidebar')" class="rounded-lg p-2 text-xl text-slate-600">☰</button><span class="ml-3 font-semibold text-slate-900">StockWise AI</span></div>
+<div class="sticky top-0 z-30 flex h-16 items-center border-b border-slate-200 bg-white/90 px-4 backdrop-blur lg:hidden"><button @click="$dispatch('toggle-sidebar')" class="rounded-lg p-2 text-slate-600"><i class="bi bi-list text-xl"></i></button><span class="ml-3 font-semibold text-slate-900">StockWise AI</span></div>
 </div>
